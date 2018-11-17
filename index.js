@@ -18,7 +18,7 @@ const LANGUAGES = require('./languages');
 const FEATURES = require('./features');
 
 function resolveMonacoPath(filePath) {
-  return require.resolve(path.join('monaco-editor/esm', filePath));
+  return require.resolve(path.join('@vscode/monaco-editor/esm', filePath));
 }
 
 const languagesById = fromPairs(
@@ -124,7 +124,7 @@ function createLoaderRules(languages, features, workers, outputPath, publicPath)
   };
   return [
     {
-      test: /monaco-editor[/\\]esm[/\\]vs[/\\]editor[/\\]editor.(api|main).js/,
+      test: /@vscode\/monaco-editor[/\\]esm[/\\]vs[/\\]editor[/\\]editor.(api|main).js/,
       use: [
         {
           loader: INCLUDE_LOADER_PATH,

@@ -1,5 +1,5 @@
 {
-  "name": "monaco-editor-webpack-plugin",
+  "name": "@vscode/monaco-editor-webpack-plugin",
   "version": "1.6.0",
   "description": "A webpack plugin for the Monaco Editor",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Microsoft/monaco-editor-webpack-plugin.git"
+    "url": "git+https://github.com/Microsoft/@vscode/monaco-editor-webpack-plugin.git"
   },
   "keywords": [
     "webpack",
@@ -20,16 +20,16 @@
   "author": "Microsoft Corporation",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Microsoft/monaco-editor-webpack-plugin/issues"
+    "url": "https://github.com/Microsoft/@vscode/monaco-editor-webpack-plugin/issues"
   },
-  "homepage": "https://github.com/Microsoft/monaco-editor-webpack-plugin#readme",
+  "homepage": "https://github.com/Microsoft/@vscode/monaco-editor-webpack-plugin#readme",
   "peerDependencies": {
     "webpack": "^4.5.0",
-    "monaco-editor": "^0.15.1"
+    "@vscode/monaco-editor": "^0.15.5"
   },
   "devDependencies": {
     "css-loader": "^1.0.1",
-    "monaco-editor": "^0.15.1",
+    "@vscode/monaco-editor": "^0.15.5",
     "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"

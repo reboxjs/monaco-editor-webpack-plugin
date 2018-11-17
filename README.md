@@ -1,16 +1,16 @@
 # Monaco Editor Webpack Loader Plugin
 
-A plugin to simplify loading the [Monaco Editor](https://github.com/Microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
+A plugin to simplify loading the [Monaco Editor](https://github.com/Microsoft/@vscode/monaco-editor) with [webpack](https://webpack.js.org/).
 
 ## Installing
 ```sh
-npm install monaco-editor-webpack-plugin
+npm install @vscode/monaco-editor-webpack-plugin
 ```
 
 ## Using
 * `webpack.config.js`:
 ```js
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const MonacoWebpackPlugin = require('@vscode/monaco-editor-webpack-plugin');
 
 module.exports = {
   entry: './index.js',
@@ -32,8 +32,8 @@ module.exports = {
 
 * `index.js`:
 ```js
-import * as monaco from 'monaco-editor'
-// or import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as monaco from '@vscode/monaco-editor'
+// or import * as monaco from '@vscode/monaco-editor/esm/vs/editor/editor.api';
 // if shipping only a subset of the features & languages is desired
 
 monaco.editor.create(document.getElementById('container'), {
