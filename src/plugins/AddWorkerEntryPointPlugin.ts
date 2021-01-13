@@ -1,10 +1,19 @@
+import * as webpack from 'webpack';
 const webpackVersion = require('webpack/package.json').version;
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
 const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
 const WebWorkerTemplatePlugin = require('webpack/lib/webworker/WebWorkerTemplatePlugin');
 
-function getCompilerHook(compiler, {id, entry, filename, chunkFilename, plugins}) {
-  return function(compilation, callback) {
+export interface IAddWorkerEntryPointPluginOptions {
+  id: string;
+  entry: string;
+  filename: string;
+  chunkFilename?: string;
+  plugins: webpack.WebpackPluginInstance[];
+}
+
+function getCompilerHook(compiler: webpack.Compiler, { id, entry, filename, chunkFilename, plugins }: IAddWorkerEntryPointPluginOptions) {
+  return function (compilation: webpack.Compilation, callback: (error?: Error | null | false) => void) {
     const outputOptions = {
       filename,
       chunkFilename,
@@ -19,29 +28,24 @@ function getCompilerHook(compiler, {id, entry, filename, chunkFilename, plugins}
     new SingleEntryPlugin(compiler.context, entry, 'main').apply(childCompiler);
     plugins.forEach((plugin) => plugin.apply(childCompiler));
 
-    childCompiler.runAsChild(callback);
+    childCompiler.runAsChild((err?: Error, entries?: webpack.Chunk[], compilation?: webpack.Compilation) => callback(err));
   }
 }
 
-class AddWorkerEntryPointPlugin {
-  constructor({
-    id,
-    entry,
-    filename,
-    chunkFilename = undefined,
-    plugins = undefined,
-  }) {
+export class AddWorkerEntryPointPlugin implements webpack.WebpackPluginInstance {
+
+  private readonly options: IAddWorkerEntryPointPluginOptions;
+
+  constructor({ id, entry, filename, chunkFilename = undefined, plugins }: IAddWorkerEntryPointPluginOptions) {
     this.options = { id, entry, filename, chunkFilename, plugins };
   }
 
-  apply(compiler) {
+  apply(compiler: webpack.Compiler) {
     const compilerHook = getCompilerHook(compiler, this.options);
     if (webpackVersion < '4') {
-      compiler.plugin('make', compilerHook);
+      (<any>compiler).plugin('make', compilerHook);
     } else {
       compiler.hooks.make.tapAsync('AddWorkerEntryPointPlugin', compilerHook);
     }
   }
 }
-
-module.exports = AddWorkerEntryPointPlugin;
